@@ -59,7 +59,7 @@ def remove_recursively(path):
 
 
 def check_backward(path_src, path_dst):
-    # running through the dir
+
     k = 0
     for i in os.listdir(path_dst):
         src_filename = path_src + '/' + i
