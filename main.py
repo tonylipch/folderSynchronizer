@@ -1,6 +1,9 @@
 import os
 import shutil
 import hashlib
+import schedule
+import  time
+
 
 
 def hash_file(filename):
@@ -71,13 +74,26 @@ def check_backward(path_src, path_dst):
                 check_backward(src_filename, dst_filename)
 
 
+def job (p):
+    print(p)
+
+
+
 
 if __name__ == '__main__':
     path_src =  r'Enter your source folder'
     path_dest = r'Enter your dest folder'
 
-    check_forward(path_src,path_dest)
-    check_backward(path_src,path_dest)
+    schedule.every().hour.do(check_forward,path_src,path_dest )
+    schedule.every().hour.do(check_backward,path_src,path_dest)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+
+
 
 
 
