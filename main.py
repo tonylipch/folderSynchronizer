@@ -73,11 +73,11 @@ def check_backward(path_src, path_dst):
 
 
 if __name__ == '__main__':
-    path =  r'/Users/antonlipchansky/Desktop/test_dir'
-    path_dest = r'/Users/antonlipchansky/Desktop/test_dir_dest'
+    path_src =  r'Enter your source folder'
+    path_dest = r'Enter your dest folder'
 
-    check_forward(path,path_dest)
-    check_backward(path,path_dest)
+    check_forward(path_src,path_dest)
+    check_backward(path_src,path_dest)
 
 
 
