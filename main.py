@@ -3,7 +3,9 @@ import shutil
 import hashlib
 import schedule
 import  time
+import logging
 
+logging.basicConfig(filename="operations.log", level=logging.INFO)
 
 
 def hash_file(filename):
@@ -33,6 +35,7 @@ def check_forward(path_src, path_dst):
                 if not os.path.exists(dst_filename):
                     os.mkdir(dst_filename)
                     print(dst_filename, ' Created!')
+                    logging.info(str(dst_filename)+': Created!')
 
                 check_forward(src_filename, dst_filename)
 
@@ -41,6 +44,7 @@ def check_forward(path_src, path_dst):
             if not os.path.exists(dst_filename):
                 shutil.copyfile(src_filename, dst_filename)
                 print(dst_filename, ' Copied!')
+                logging.info(str(dst_filename) +': Copied!')
             else:
                 src_checksum = hash_file(src_filename)
                 dst_checksum = hash_file(dst_filename)
@@ -48,7 +52,8 @@ def check_forward(path_src, path_dst):
                 if src_checksum != dst_checksum:
                     shutil.copyfile(src_filename, dst_filename)
                     print(dst_filename, 'Updated!')
-                    k = 0
+                    logging.info(str(dst_filename)+': file Updated')
+
 
 
 def remove_recursively(path):
@@ -59,6 +64,7 @@ def remove_recursively(path):
     else:
         os.remove(path)
     print(path, 'Removed')
+    logging.info(str(path)+': file Removed!')
 
 
 def check_backward(path_src, path_dst):
@@ -79,11 +85,11 @@ def check_backward(path_src, path_dst):
 
 
 if __name__ == '__main__':
-    path_src =  r'Enter your source folder'
-    path_dest = r'Enter your dest folder'
+    path_src =  r'/Users/antonlipchansky/Desktop/test_dir'
+    path_dest = r'/Users/antonlipchansky/Desktop/test_dir_dest'
 
-    schedule.every().hour.do(check_forward,path_src,path_dest )
-    schedule.every().hour.do(check_backward,path_src,path_dest)
+    schedule.every().second.do(check_forward,path_src,path_dest )
+    schedule.every().second.do(check_backward,path_src,path_dest)
 
     while True:
         schedule.run_pending()
