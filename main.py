@@ -85,11 +85,11 @@ def check_backward(path_src, path_dst):
 
 
 if __name__ == '__main__':
-    path_src =  r'/Users/antonlipchansky/Desktop/test_dir'
-    path_dest = r'/Users/antonlipchansky/Desktop/test_dir_dest'
+    path_src =  r'Enter source directory'
+    path_dest = r'Enter replica directory'
 
-    schedule.every().second.do(check_forward,path_src,path_dest )
-    schedule.every().second.do(check_backward,path_src,path_dest)
+    schedule.every().hour.do(check_forward,path_src,path_dest)
+    schedule.every().hour.do(check_backward,path_src,path_dest)
 
     while True:
         schedule.run_pending()
