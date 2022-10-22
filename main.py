@@ -74,8 +74,6 @@ def check_backward(path_src, path_dst):
                 check_backward(src_filename, dst_filename)
 
 
-def job (p):
-    print(p)
 
 
 
