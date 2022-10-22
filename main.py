@@ -21,7 +21,7 @@ def hash_file(filename):
 
 
 def check_forward(path_src, path_dst):
-    # running through the dir
+
     for i in os.listdir(path_src):
         src_filename = path_src + '/' + i
         dst_filename = path_dst + '/' + i
