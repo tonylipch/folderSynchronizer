@@ -1,9 +1,10 @@
 import os
 import shutil
 import hashlib
-import  time
+import time
 import logging
-import  sys
+from datetime import datetime
+import sys
 
 import pycron as pycron
 
@@ -34,7 +35,6 @@ def hash_file(filename):
 
 
 def check_forward(path_src, path_dst):
-
     for i in os.listdir(path_src):
         src_filename = path_src + '/' + i
         dst_filename = path_dst + '/' + i
@@ -42,7 +42,7 @@ def check_forward(path_src, path_dst):
             if not i.startswith('.'):
                 if not os.path.exists(dst_filename):
                     os.mkdir(dst_filename)
-                    logging.info(str(dst_filename)+': Created!')
+                    logging.info(str(dst_filename) + ': Created!')
 
                 check_forward(src_filename, dst_filename)
 
@@ -50,15 +50,14 @@ def check_forward(path_src, path_dst):
 
             if not os.path.exists(dst_filename):
                 shutil.copyfile(src_filename, dst_filename)
-                logging.info(str(dst_filename) +': Copied!')
+                logging.info(str(dst_filename) + ': Copied!')
             else:
                 src_checksum = hash_file(src_filename)
                 dst_checksum = hash_file(dst_filename)
 
                 if src_checksum != dst_checksum:
                     shutil.copyfile(src_filename, dst_filename)
-                    logging.info(str(dst_filename)+': file Updated')
-
+                    logging.info(str(dst_filename) + ': file Updated')
 
 
 def remove_recursively(path):
@@ -68,12 +67,10 @@ def remove_recursively(path):
         os.rmdir(path)
     else:
         os.remove(path)
-    logging.info(str(path)+': file Removed!')
+    logging.info(str(path) + ': file Removed!')
 
 
 def check_backward(path_src, path_dst):
-
-
     for i in os.listdir(path_dst):
         src_filename = path_src + '/' + i
         dst_filename = path_dst + '/' + i
@@ -84,47 +81,29 @@ def check_backward(path_src, path_dst):
                 check_backward(src_filename, dst_filename)
 
 
+def synchronize(src, dst):
 
+    check_forward(src, dst)
+    check_backward(src, dst)
 
 
 
 if __name__ == '__main__':
-    path_src =  r''
-    path_dest = r''
-    pycron_time=''
+    path_src = ""
+    path_dest = ""
+    pycron_time = ""
 
-    if len(sys.argv)!=4:
+
+    if len(sys.argv) != 4:
         logging.error("error. use:\nsync <src-dir> <dst-dit> \"<cron expr>\"")
-        os.system.exit(0)
+        exit(0)
     else:
         path_src = sys.argv[1]
-        path_dest= sys.argv[2]
-        pycron_time= sys.argv[3]
-
-
-
+        path_dest = sys.argv[2]
+        pycron_time = sys.argv[3]
 
 
     while True:
-        if pycron.is_now(pycron_time):  # At 00:05 on day-of-month 2 and on Sunday.
-
-            check_forward(path_src,path_dest)
-            check_backward(path_src,path_dest)
-
-            time.sleep(60)  # The process should take at least 60 sec
-            # to avoid running twice in one minute
-        else:
-            time.sleep(15)  # Check again in 15 seconds
-
-
-
-
-
-
-
-
-
-
-
-
+        if pycron.is_now(pycron_time):
+            synchronize(path_src, path_dest)
 
