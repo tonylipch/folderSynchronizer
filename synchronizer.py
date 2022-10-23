@@ -106,4 +106,3 @@ if __name__ == '__main__':
     while True:
         if pycron.is_now(pycron_time):
             synchronize(path_src, path_dest)
-
