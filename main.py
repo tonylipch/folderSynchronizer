@@ -3,6 +3,7 @@ import shutil
 import hashlib
 import  time
 import logging
+import  sys
 
 import pycron as pycron
 
@@ -88,11 +89,24 @@ def check_backward(path_src, path_dst):
 
 
 if __name__ == '__main__':
-    path_src =  r'/Users/antonlipchansky/Desktop/test_dir'
-    path_dest = r'/Users/antonlipchansky/Desktop/test_dir_dest'
+    path_src =  r''
+    path_dest = r''
+    pycron_time=''
+
+    if len(sys.argv)!=4:
+        logging.error("error. use:\nsync <src-dir> <dst-dit> \"<cron expr>\"")
+        os.system.exit(0)
+    else:
+        path_src = sys.argv[1]
+        path_dest= sys.argv[2]
+        pycron_time= sys.argv[3]
+
+
+
+
 
     while True:
-        if pycron.is_now('5 0 2 * 0'):  # At 00:05 on day-of-month 2 and on Sunday.
+        if pycron.is_now(pycron_time):  # At 00:05 on day-of-month 2 and on Sunday.
 
             check_forward(path_src,path_dest)
             check_backward(path_src,path_dest)
