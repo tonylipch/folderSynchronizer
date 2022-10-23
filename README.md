@@ -10,8 +10,13 @@ program should maintain a full, identical copy of source folder at replica folde
 <h1>Terms of use</h1>
 
 The program is easy to use. The principle is that the script tracks changes in the replica folder in the background and compares them with the source folder. If there are any inconsistencies with the source directory, the program <b>brings everything into a single view.</b>
+  
+ 
+  Syntax for program startup is : <b>python synchronizer.py "your source directory" "your dest dirrectory" "m(minute) h(hour) d(moth) m(month) d(week)" </b>
+  
+  Example : python synchronizer.py "C:\source" "C:\replica" "5 4 * * 4" . This script will be execute every  Thursday at 4:05am .
 
-Just insert 2 directories into :<br><br>path_src =  r'C:\my_dir'<br>  path_dest = r'C:\your_dir' to compare. 
+
 
 
 
